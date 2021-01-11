@@ -9,7 +9,11 @@ const io = socketio(server); // enables server side functionality of socket.io o
 app.use('/', express.static(__dirname + '/public'));
 
 io.on('connection', (socket) => {
-  console.log(socket.id); // every time we call io() on client side, server side log will be printed
+  console.log('connection received', socket.id); // every time we call io() on client side, server side log will be printed
+
+  socket.on('colorit', (data) => {
+    io.emit('colorit', data);
+  });
 });
 
 server.listen(3333, () => {
